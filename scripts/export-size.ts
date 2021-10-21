@@ -20,7 +20,7 @@ async function run() {
 
   for (const pkg of [...packages.slice(1), packages[0]]) {
     const { exports, packageJSON } = await getExportsSize({
-      pkg: `./packages/${pkg.name}/dist`,
+      pkg: `./packages/${pkg.name}/`,
       output: false,
       bundler: 'rollup',
       external: ['vue-demi', ...(pkg.external || [])],

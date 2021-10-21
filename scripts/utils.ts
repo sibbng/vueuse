@@ -353,17 +353,17 @@ export async function updatePackageJSON(indexes: PackageIndexes) {
     packageJSON.homepage = name === 'core'
       ? 'https://github.com/vueuse/vueuse#readme'
       : `https://github.com/vueuse/vueuse/tree/main/packages/${name}#readme`
-    packageJSON.main = './index.cjs'
-    packageJSON.types = './index.d.ts'
-    packageJSON.module = './index.mjs'
+    packageJSON.main = './dist/index.cjs'
+    packageJSON.types = './dist/index.d.ts'
+    packageJSON.module = './dist/index.mjs'
     if (iife !== false) {
-      packageJSON.unpkg = './index.iife.min.js'
-      packageJSON.jsdelivr = './index.iife.min.js'
+      packageJSON.unpkg = './dist/index.iife.min.js'
+      packageJSON.jsdelivr = './dist/index.iife.min.js'
     }
     packageJSON.exports = {
       '.': {
-        import: './index.mjs',
-        require: './index.cjs',
+        import: './dist/index.mjs',
+        require: './dist/index.cjs',
       },
       './*': './*',
     }
@@ -373,13 +373,13 @@ export async function updatePackageJSON(indexes: PackageIndexes) {
         .filter(i => i.package === name)
         .forEach((i) => {
           packageJSON.exports[`./${i.name}`] = {
-            import: `./${i.name}.mjs`,
-            require: `./${i.name}.cjs`,
+            import: `./dist/${i.name}.mjs`,
+            require: `./dist/${i.name}.cjs`,
           }
           if (i.component) {
             packageJSON.exports[`./${i.name}/component`] = {
-              import: `./${i.name}/component.mjs`,
-              require: `./${i.name}/component.cjs`,
+              import: `./dist/${i.name}/component.mjs`,
+              require: `./dist/${i.name}/component.cjs`,
             }
           }
         })

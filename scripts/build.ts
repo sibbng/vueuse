@@ -44,6 +44,16 @@ async function buildMetaFiles() {
       if (key.startsWith('@vueuse/'))
         packageJSON.dependencies[key] = version
     }
+    for (const key of Object.keys(packageJSON.exports)) {
+      for (const key2 of Object.keys(packageJSON.exports[key])) {
+        if (packageJSON.exports[key][key2].startsWith('./dist/'))
+          packageJSON.exports[key][key2] = packageJSON.exports[key][key2].replace('./dist/', './')
+      }
+    }
+    for (const key of Object.keys(packageJSON)) {
+      if (typeof packageJSON[key] === 'string' && packageJSON[key].startsWith('./dist/'))
+        packageJSON[key] = packageJSON[key].replace('./dist/', './')
+    }
     await fs.writeJSON(path.join(packageDist, 'package.json'), packageJSON, { spaces: 2 })
   }
 }
